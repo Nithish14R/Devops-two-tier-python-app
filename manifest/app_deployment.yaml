@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: pythonapp 
+        image: nithishra/python-app:latest
+        env:
+        - name: MYSQL_HOST
+          value: "10.1.39.50"          # this is your mysql's service clusture IP, Make sure to change it with yours
+        - name: MYSQL_PASSWORD
+          value: "admin"
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_DB
+          value: "mydb"
+        ports:
+        - containerPort: 5000
